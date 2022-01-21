@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicWebServer.Server", "BasicWebServer.Server\BasicWebServer.Server.csproj", "{F6260181-0C0A-4509-8933-E2474E97AE02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicWebServer.Demo", "BasicWebServer.Demo\BasicWebServer.Demo.csproj", "{ACC6BA72-F2DC-47B4-83C1-769BEDC2F692}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F6260181-0C0A-4509-8933-E2474E97AE02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6260181-0C0A-4509-8933-E2474E97AE02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6260181-0C0A-4509-8933-E2474E97AE02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6260181-0C0A-4509-8933-E2474E97AE02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACC6BA72-F2DC-47B4-83C1-769BEDC2F692}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACC6BA72-F2DC-47B4-83C1-769BEDC2F692}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACC6BA72-F2DC-47B4-83C1-769BEDC2F692}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACC6BA72-F2DC-47B4-83C1-769BEDC2F692}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {33EF20BB-3E0F-42D1-8A9F-1B1E80B601C3}
+	EndGlobalSection
+EndGlobal
