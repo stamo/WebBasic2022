@@ -1,24 +1,3 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - SoftUni Judge</title>
-    <meta name="description" content="Online system for programming competitions" />
-    <link href="/Content/bootstrap/bootstrap?v=7EVAkqrqyPC0hRsMoFTAzVOblhjeHKzBszkwWmAAtAM1" rel="stylesheet"/>
-<link href="/Content/KendoUI/kendo?v=wqkxBH72RBfdO9pjHK1yYc9KqNGxXwI0GjMKQ31bqyI1" rel="stylesheet"/>
-<link href="/Content/styles?v=XYtuxo70EnFkEWwI0zdFDZdx5lV4ejKSsymPG9CxNQ41" rel="stylesheet"/>
+﻿This is my awsome file
 
-    
-    <link href="/Content/home/index?v=VCFAZAhTp3rtDjneq-R1gDf8ugPvEYzrvNapwDmGoRw1" rel="stylesheet"/>
-
-
-    <script src="/bundles/jquery?v=emRf7jyCXRjntd-r9KgldtqdMIkBKOg7UyZbwv5gDrM1"></script>
-<script src="/bundles/kendo?v=5PZ_gYmHOqMcBFE2gZPTNrZMe9ThYyFOj0JkbeYtLJw1"></script>
-<script src="/bundles/global?v=Gqkb4Wc6vBAEiPxMJ3zJl27H0cHqfhwkmXr0i3osqMw1"></script>
-
-</head>
-<body>
-This is my awsome file
-</body>
-</html>
+And I edited it :)
