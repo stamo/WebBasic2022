@@ -1,21 +1,10 @@
 ﻿using BasicWebServer.Server.Controllers;
 using BasicWebServer.Server.HTTP;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BasicWebServer.Demo.Controllers
 {
     public class UserController : Controller
     {
-        private const string LoginForm = @"<form action='/Login' method='POST'>
-                Username: <input type='text' name='Username'/>
-                Password: <input type='password' name='Password'/>
-                <input type='submit' value ='Log In' /> 
-            </form>";
-
         private const string Username = "user";
 
         private const string Password = "user123";
@@ -45,12 +34,8 @@ namespace BasicWebServer.Demo.Controllers
 
                 return Html(bodyText, cookies);
             }
-            else
-            {
-                bodyText = LoginForm;
-            }
 
-            return Html(bodyText);
+            return Redirect("/Login");
         }
 
         internal Response GetUserData()
@@ -60,7 +45,7 @@ namespace BasicWebServer.Demo.Controllers
                 return Html($"<h3>Currently logged-in user is with username '{Username}'</h3>");
             }
 
-            return Redirect("/login");
+            return Redirect("/Login");
         }
 
         internal Response Logout()
@@ -70,6 +55,6 @@ namespace BasicWebServer.Demo.Controllers
             return Html("<h3>Logged out successfully!</h3>");
         }
 
-        public Response Login() => Html(LoginForm);
+        public Response Login() => View();
     }
 }
