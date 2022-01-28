@@ -1,4 +1,5 @@
-﻿using BasicWebServer.Server.Controllers;
+﻿using BasicWebServer.Demo.Models;
+using BasicWebServer.Server.Controllers;
 using BasicWebServer.Server.HTTP;
 using System.Linq;
 using System.Text;
@@ -24,14 +25,16 @@ namespace BasicWebServer.Demo.Controllers
 
         public Response HtmlFormPost()
         {
-            StringBuilder sb = new StringBuilder();
+            string name = Request.Form["Name"];
+            string age = Request.Form["Age"];
 
-            foreach (var (key, value) in Request.Form)
+            var model = new FormViewModel()
             {
-                sb.AppendLine($"{key} - {value}");
-            }
+                Name = name,
+                Age = int.Parse(age)
+            };
 
-            return Text(sb.ToString());
+            return View(model);
         }
 
         public Response DownloadContent() => File(FileName);
