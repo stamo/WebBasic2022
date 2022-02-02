@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BasicWebServer.Server.Common
 {
@@ -11,6 +12,14 @@ namespace BasicWebServer.Server.Common
                 name ??= "Value";
 
                 throw new ArgumentException($"{name} cannot be null.");
+            }
+        }
+
+        public static void AgainstDuplicatedKey<T,V>(IDictionary<T,V> dictionary, T key, string name)
+        {
+            if (dictionary.ContainsKey(key))
+            {
+                throw new ArgumentException($"{name} already contains key {key.ToString()}");
             }
         }
     }
