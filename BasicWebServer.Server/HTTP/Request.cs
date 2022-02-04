@@ -2,6 +2,7 @@
 using System.Web;
 using System.Linq;
 using System.Collections.Generic;
+using BasicWebServer.Server.Common;
 
 namespace BasicWebServer.Server.HTTP
 {
@@ -23,8 +24,12 @@ namespace BasicWebServer.Server.HTTP
 
         public IReadOnlyDictionary<string, string> Form { get; private set; }
 
-        public static Request Parse(string request)
+        public static IServiceCollection ServiceCollection { get; private set; }
+
+        public static Request Parse(string request, IServiceCollection serviceCollection)
         {
+            ServiceCollection = serviceCollection;
+
             var lines = request.Split("\r\n");
 
             var startLine = lines.First().Split(" ");
