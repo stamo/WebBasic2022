@@ -1,11 +1,7 @@
 ﻿using BasicWebServer.Server.HTTP;
+using BasicWebServer.Server.Identity;
 using BasicWebServer.Server.Responses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BasicWebServer.Server.Controllers
 {
@@ -13,9 +9,38 @@ namespace BasicWebServer.Server.Controllers
     {
         protected Request Request { get; set; }
 
+        private UserIdentity userIdentity;
+
         public Controller(Request request)
         {
             Request = request;
+        }
+
+        protected UserIdentity User
+        {
+            get
+            {
+                if (this.userIdentity == null)
+                {
+                    this.userIdentity = this.Request.Session.ContainsKey(Session.SessionUserKey)
+                        ? new UserIdentity { Id = this.Request.Session[Session.SessionUserKey] }
+                        : new();
+                }
+
+                return this.userIdentity;
+            }
+        }
+
+        protected void SignIn(string userId)
+        {
+            this.Request.Session[Session.SessionUserKey] = userId;
+            this.userIdentity = new UserIdentity { Id = userId };
+        }
+
+        protected void SignOut()
+        {
+            this.Request.Session.Clear();
+            this.userIdentity = new();
         }
 
         protected Response Text(string text) => new TextResponse(text);
