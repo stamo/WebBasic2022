@@ -2,6 +2,7 @@
 using BasicWebServer.Server.Attributes;
 using BasicWebServer.Server.Controllers;
 using BasicWebServer.Server.HTTP;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -37,6 +38,18 @@ namespace BasicWebServer.Demo.Controllers
             {
                 Name = name,
                 Age = int.Parse(age)
+            };
+
+            return View(model);
+        }
+
+        public Response Test()
+        {
+            var model = new List<FormViewModel>()
+            {
+                new(){ Age = 23, Name = "Pesho" },
+                new(){ Age = 24, Name = "Gosho" },
+                new(){ Age = 23, Name = "Misho" }
             };
 
             return View(model);
