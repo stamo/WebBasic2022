@@ -34,6 +34,8 @@ namespace BasicWebServer.Server.Responses
 
             if (model != null)
             {
+                viewContent = EvaluateConditions(viewContent, model);
+
                 if (model is IEnumerable)
                 {
                     viewContent = PopulateEnumerableModel(viewContent, model);
@@ -100,6 +102,133 @@ namespace BasicWebServer.Server.Responses
             return result.ToString();
         }
 
+        private string EvaluateConditions(string viewContent, object model)
+        {
+            var result = new StringBuilder();
+
+            var lines = viewContent
+                .Split(Environment.NewLine)
+                .Select(line => line.Trim());
+
+            var inCondition = false;
+            var waitingForElse = false;
+            var inElse = false;
+            string conditionPropertyName = string.Empty;
+
+            StringBuilder ifContent = null;
+            StringBuilder elseContent = null;
+
+            foreach (var line in lines)
+            {
+                if (line.StartsWith("{{if("))
+                {
+                    int start = line.IndexOf('(') + 1;
+                    int end = line.IndexOf(')');
+                    conditionPropertyName = line.Substring(start, end - start)?.Trim();
+                    inCondition = true;
+                    inElse = false;
+                    waitingForElse = false;
+
+                    continue;
+                }
+
+                if (inCondition)
+                {
+                    if (waitingForElse && line.StartsWith("{{else}}"))
+                    {
+                        inElse = true;
+                        inCondition = false;
+                        waitingForElse = false;
+
+                        continue;
+                    }
+                    else if (waitingForElse)
+                    {
+                        inElse = false;
+                        inCondition = false;
+                        waitingForElse = false;
+
+                        string conditionResult = GetConditionContent(ifContent, elseContent, model, conditionPropertyName);
+                        
+                        if (!string.IsNullOrWhiteSpace(conditionResult))
+                        {
+                            result.AppendLine(conditionResult);
+                        }
+
+                        result.AppendLine(line);
+
+                        continue;
+                    }
+
+                    if (line.StartsWith("{"))
+                    {
+                        ifContent = new StringBuilder();
+                    }
+                    else if (line.StartsWith("}"))
+                    {
+                        waitingForElse = true;
+                    }
+                    else 
+                    {
+                        ifContent.AppendLine(line);
+                    }
+
+                    continue;
+                }
+
+                if (inElse)
+                {
+                    if (line.StartsWith("{"))
+                    {
+                        elseContent = new StringBuilder();
+                    }
+                    else if (line.StartsWith("}"))
+                    {
+                        inElse = false;
+                        string conditionResult = GetConditionContent(ifContent, elseContent, model, conditionPropertyName);
+
+                        if (!string.IsNullOrWhiteSpace(conditionResult))
+                        {
+                            result.AppendLine(conditionResult);
+                        }
+                    }
+                    else
+                    {
+                        elseContent.AppendLine(line);
+                    }
+
+                    continue;
+                }
+
+                result.AppendLine(line);
+            }
+
+            return result.ToString();
+        }
+
+        private string GetConditionContent(StringBuilder ifContent, StringBuilder elseContent, object model, string conditionPropertyName)
+        {
+            var prop = model
+                .GetType()
+                .GetProperty(conditionPropertyName);
+
+            if (prop != null)
+            {
+                bool? conditionResult = prop.GetValue(model) as bool?;
+
+                if (conditionResult == true && ifContent != null)
+                {
+                    return ifContent.ToString();
+                }
+                else if (conditionResult == false && elseContent != null)
+                {
+                    return elseContent.ToString();
+                }
+            }
+
+            return null;
+        }
+
         private string PopulateModel(string viewContent, object model)
         {
             var data = model
@@ -113,6 +242,13 @@ namespace BasicWebServer.Server.Responses
 
             foreach (var item in data)
             {
+                if (item.Value is IEnumerable && item.Value is not string)
+                {
+                    viewContent = PopulateEnumerableModel(viewContent, item.Value);
+
+                    continue;
+                }
+
                 const string openingBrackets = "{{";
                 const string closingBrackets = "}}";
 
